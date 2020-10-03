@@ -1,16 +1,17 @@
-package main
+// package main
 
-import (
-	"errors"
-	"fmt"
-)
+// import (
+// 	"errors"
+// 	"fmt"
+// 	"os"
+// )
 
-func isGreaterThanTen(num int) error {
-	if num < 10 {
-		return errors.New("something bad happened")
-	}
-	return nil
-}
+// func isGreaterThanTen(num int) error {
+// 	if num < 10 {
+// 		return errors.New("something bad happened")
+// 	}
+// 	return nil
+// }
 
 // func openFile() error {
 // 	f, err := os.Open("missingFile.txt")
@@ -21,21 +22,16 @@ func isGreaterThanTen(num int) error {
 // 	return nil
 // }
 
-func main() {
-	num := 9
-	err := isGreaterThanTen(num)
-	if err != nil {
-		fmt.Println(fmt.Errorf("%d is NOT GREATER THAN TEN", num))
-		// panic(err)
-		// log.Fatalln(err)
-	}
+// func main() {
+// 	num := 9
+// 	if err := isGreaterThanTen(num); err != nil {
+// 		fmt.Println(fmt.Errorf("%d is NOT GREATER THAN TEN", num))
+// 	}
 
-	// err := openFile()
-
-	// if err != nil {
-	// 	fmt.Println(fmt.Errorf("%v", err))
-	// }
-}
+// 	if err := openFile(); err != nil {
+// 		fmt.Println(fmt.Errorf("%v", err))
+// 	}
+// }
 
 // TAKE A MINUTE TO REFACTOR THE ABOVE CODE TO SCOPE THE ERROR VARIABLE INTO THE IF BLOCK
 
@@ -67,24 +63,32 @@ func main() {
 
 // ****************************************************
 
-// package main
+package main
 
-// import (
-// 	"fmt"
-// )
+import (
+	"fmt"
+)
 
-// func doThings() {
-// 	for i := 0; i < 5; i++ {
-// 		fmt.Println(i)
-// 		if i == 2 {
-// 			panic("PANIC!")
-// 		}
-// 	}
-// }
+func recoverFromPanic() {
+	if r := recover(); r != nil {
+		fmt.Println("We Panicked but everything's fine")
+		fmt.Println(r)
+	}
+}
 
-// func main() {
-// 	doThings()
-// }
+func doThings() {
+	defer recoverFromPanic()
+	for i := 0; i < 5; i++ {
+		fmt.Println(i)
+		if i == 2 {
+			panic("PANIC!")
+		}
+	}
+}
+
+func main() {
+	doThings()
+}
 
 // ****************************************************
 
